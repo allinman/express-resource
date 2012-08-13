@@ -10,6 +10,7 @@
   , "devDependencies": {
       "connect": "2.4.3"
     , "express": "3.0.0rc2"
+    , "methods": "latest"
     , "ejs": "0.4.x"
     , "expresso": "0.9.x"
     , "qs": "0.1.x"
