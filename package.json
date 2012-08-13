@@ -8,8 +8,8 @@
   ]
   , "dependencies": { "lingo": ">= 0.0.4" }
   , "devDependencies": {
-      "connect": "1.8.x"
-    , "express": "2.5.x"
+      "connect": "2.4.3"
+    , "express": "3.0.0rc2"
     , "ejs": "0.4.x"
     , "expresso": "0.9.x"
     , "qs": "0.1.x"

@@ -12,7 +12,8 @@
 
 var express = require('express')
   , lingo = require('lingo')
-  , en = lingo.en;
+  , en = lingo.en
+  , methods = require('methods');
 
 /**
  * Pre-defined action ordering.
@@ -38,6 +39,9 @@ var orderedActions = [
  */
 
 var Resource = module.exports = function Resource(name, actions, app) {
+  if (!(this instanceof Resource)) return new Resource(name, actions, app);  
+  if ('object' == typeof name) app = actions, actions = name, name = null;
+  
   this.name = name;
   this.app = app;
   this.routes = {};
@@ -231,7 +235,7 @@ Resource.prototype.mapDefaultAction = function(key, fn){
  * Setup http verb methods.
  */
 
-express.router.methods.concat(['del', 'all']).forEach(function(method){
+methods.concat(['del', 'all']).forEach(function(method){
   Resource.prototype[method] = function(path, fn){
     if ('function' == typeof path
       || 'object' == typeof path) fn = path, path = '';
@@ -249,14 +253,14 @@ express.router.methods.concat(['del', 'all']).forEach(function(method){
  * @api public
  */
 
-express.HTTPServer.prototype.resource =
-express.HTTPSServer.prototype.resource = function(name, actions, opts){
-  var options = actions || {};
-  if ('object' == typeof name) actions = name, name = null;
-  if (options.id) actions.id = options.id;
-  this.resources = this.resources || {};
-  if (!actions) return this.resources[name] || new Resource(name, null, this);
-  for (var key in opts) options[key] = opts[key];
-  var res = this.resources[name] = new Resource(name, actions, this);
-  return res;
-};
+// express.HTTPServer.prototype.resource =
+// express.HTTPSServer.prototype.resource = function(name, actions, opts){
+//   var options = actions || {};
+//   if ('object' == typeof name) actions = name, name = null;
+//   if (options.id) actions.id = options.id;
+//   this.resources = this.resources || {};
+//   if (!actions) return this.resources[name] || new Resource(name, null, this);
+//   for (var key in opts) options[key] = opts[key];
+//   var res = this.resources[name] = new Resource(name, actions, this);
+//   return res;
+// };
